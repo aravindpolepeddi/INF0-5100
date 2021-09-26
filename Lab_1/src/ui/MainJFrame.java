@@ -10,6 +10,7 @@ package ui;
  *
  * @author aravindpolepeddi
  */
+import javax.swing.JOptionPane;
 import model.Profile;
 public class MainJFrame extends javax.swing.JFrame {
 
@@ -119,7 +120,11 @@ splitPane.setRightComponent(createPanel);
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
         ViewJPanel viewPanel= new ViewJPanel(profiles);
+        if(viewPanel.profile!=null&&viewPanel.getName()!=null&&!viewPanel.profile.getName().isEmpty()&&!viewPanel.profile.getName().isBlank()){
         splitPane.setRightComponent(viewPanel);
+        }
+        else{}
+        
     }//GEN-LAST:event_btnViewActionPerformed
 
     /**
