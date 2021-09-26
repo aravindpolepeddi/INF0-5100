@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import model.Profile;
 import java.text.DateFormat; 
 import java.util.Date;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,11 +29,17 @@ public class ViewJPanel extends javax.swing.JPanel {
     public ViewJPanel(Profile Profiles){
         initComponents();
         this.profile=Profiles;
-        try {
-            viewProduct();
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(ViewJPanel.class.getName()).log(Level.SEVERE, null, ex);
+        if(profile!=null&&profile.getName()!=null&&!profile.getName().isEmpty()&&!profile.getName().isBlank()){
+            try {
+                viewProduct();
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(ViewJPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        else{
+            JOptionPane.showMessageDialog(this,"Enter all the fields");
+        }
+        
     }
     
     
