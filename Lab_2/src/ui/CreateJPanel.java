@@ -179,6 +179,8 @@ String[] myarray = new String[8];
             }
         });
 
+        jButtonUpload.setBackground(new java.awt.Color(0, 153, 51));
+        jButtonUpload.setForeground(new java.awt.Color(255, 255, 255));
         jButtonUpload.setText("Upload");
         jButtonUpload.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
