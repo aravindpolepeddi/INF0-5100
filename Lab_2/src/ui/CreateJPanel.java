@@ -5,10 +5,20 @@
  */
 package ui;
 
-import java.awt.event.ItemEvent;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import model.Fleet;
 import model.FleetDirectory;
 
@@ -23,6 +33,7 @@ public class CreateJPanel extends javax.swing.JPanel {
      */
 FleetDirectory fd;
 Fleet fleet;
+String[] myarray = new String[8];
     CreateJPanel(FleetDirectory fleetdir) {
     initComponents();
     this.fd=fleetdir; 
@@ -60,6 +71,8 @@ Fleet fleet;
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jLabel2 = new javax.swing.JLabel();
         jCheckAvailable = new javax.swing.JCheckBox();
+        jButtonUpload = new javax.swing.JButton();
+        jTextFieldUploadLocation = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(51, 51, 51));
         setForeground(new java.awt.Color(255, 255, 255));
@@ -166,6 +179,13 @@ Fleet fleet;
             }
         });
 
+        jButtonUpload.setText("Upload");
+        jButtonUpload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUploadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -184,21 +204,24 @@ Fleet fleet;
                             .addComponent(lblMaintainanceExpiry)
                             .addComponent(lblSerialNumber)
                             .addComponent(lblAvailableCity)
-                            .addComponent(lblSeatingCapacity)
-                            .addComponent(jLabel2))
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jButtonUpload)
+                                .addComponent(lblSeatingCapacity)))
                         .addGap(39, 39, 39)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextYearofManufacture, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextCarModel, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextCarManufacturer, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextSerialNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextAvailableCity, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextSeatingCapacity, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextYearofManufacture, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                            .addComponent(jTextCarModel, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                            .addComponent(jTextCarManufacturer, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                            .addComponent(jTextSerialNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                            .addComponent(jTextAvailableCity, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                            .addComponent(jTextSeatingCapacity, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
                             .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckAvailable))
+                            .addComponent(jCheckAvailable)
+                            .addComponent(jTextFieldUploadLocation))
                         .addGap(127, 127, 127))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(227, 227, 227)
+                .addGap(225, 225, 225)
                 .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -239,9 +262,13 @@ Fleet fleet;
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jCheckAvailable))
-                .addGap(16, 16, 16)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonUpload)
+                    .addComponent(jTextFieldUploadLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
                 .addComponent(jButtonSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(15, 15, 15))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -273,6 +300,23 @@ Fleet fleet;
         // TODO add your handling code here:
         StringBuilder Error = new StringBuilder();
         Fleet newfleet = fd.addFleet();
+        if(!jTextFieldUploadLocation.getText().isEmpty()){
+         newfleet.setCarModel(myarray[0]); jTextCarModel.setText(myarray[0]);
+         newfleet.setCarManufacturer(myarray[1]); jTextCarManufacturer.setText(myarray[1]);
+         newfleet.setYearofManufacture(Integer.parseInt(myarray[2]));jTextYearofManufacture.setText(myarray[2]);
+        SimpleDateFormat formatter = new SimpleDateFormat("MM,dd,yyyy");  
+         Date date = null;
+            try {
+                date = formatter.parse(myarray[3]);
+            } catch (ParseException ex) {
+                Logger.getLogger(CreateJPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         newfleet.setMaintainanceExpiry(date); jDateChooser2.setDate(date);
+         newfleet.setSerialNumber(myarray[4]); jTextSerialNumber.setText(myarray[4]);
+         newfleet.setAvailableCity(myarray[5]); jTextAvailableCity.setText(myarray[5]);
+         newfleet.setSeatingCapacity(Integer.parseInt(myarray[6])); jTextSeatingCapacity.setText(myarray[6]);
+         newfleet.setAvailable(myarray[7]); jCheckAvailable.setSelected(Boolean.parseBoolean(myarray[7]));
+        }
         if(!jTextCarModel.getText().isEmpty()){newfleet.setCarModel(jTextCarModel.getText());}
         else{ Error.append("Enter Model \n");}
         if(!jTextCarManufacturer.getText().isEmpty()){newfleet.setCarManufacturer(jTextCarManufacturer.getText());}
@@ -311,8 +355,8 @@ Fleet fleet;
 
     private void jTextYearofManufactureKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextYearofManufactureKeyPressed
         // TODO add your handling code here:
-         String phoneNumber =jTextYearofManufacture.getText();
-        int length = phoneNumber.length();
+         String YearofManf =jTextYearofManufacture.getText();
+        int length = YearofManf.length();
         char ch=evt.getKeyChar();
         if(evt.getKeyChar()>='0'&& evt.getKeyChar()<='9'){
             if(length<4)
@@ -349,9 +393,45 @@ Fleet fleet;
         }
     }//GEN-LAST:event_jTextSeatingCapacityKeyPressed
 
+    private void jButtonUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUploadActionPerformed
+        // TODO add your handling code here:
+        JFileChooser chooser = new JFileChooser();
+        chooser.showOpenDialog(null);
+        File f=chooser.getSelectedFile();
+        String filename=f.getAbsolutePath();
+        fleet.setFileLocation(filename);
+        FileReader reader = null;
+    try {
+        reader = new FileReader(filename);
+    } catch (FileNotFoundException ex) {
+        Logger.getLogger(CreateJPanel.class.getName()).log(Level.SEVERE, null, ex);
+    }
+        BufferedReader breader = new BufferedReader(reader);
+        
+        String line = null;
+    try {
+        line = breader.readLine();
+    } catch (IOException ex) {
+        Logger.getLogger(CreateJPanel.class.getName()).log(Level.SEVERE, null, ex);
+    }
+                        int i=0;
+			while (line != null) {
+				myarray[i]=line;
+                                i++;
+            try {
+                // read next line
+                line = breader.readLine();
+            } catch (IOException ex) {
+                Logger.getLogger(CreateJPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+			}
+        jTextFieldUploadLocation.setText(filename);
+    }//GEN-LAST:event_jButtonUploadActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSave;
+    private javax.swing.JButton jButtonUpload;
     private javax.swing.JCheckBox jCheckAvailable;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
@@ -359,6 +439,7 @@ Fleet fleet;
     private javax.swing.JTextField jTextAvailableCity;
     private javax.swing.JTextField jTextCarManufacturer;
     private javax.swing.JTextField jTextCarModel;
+    private javax.swing.JTextField jTextFieldUploadLocation;
     private javax.swing.JTextField jTextSeatingCapacity;
     private javax.swing.JTextField jTextSerialNumber;
     private javax.swing.JTextField jTextYearofManufacture;

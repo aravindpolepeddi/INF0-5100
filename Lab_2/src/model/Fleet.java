@@ -22,6 +22,15 @@ public class Fleet {
     private int SeatingCapacity;
     private Date UpdateTime;
     private String Available;
+    private String FileLocation;
+
+    public String getFileLocation() {
+        return FileLocation;
+    }
+
+    public void setFileLocation(String FileLocation) {
+        this.FileLocation = FileLocation;
+    }
     
 
     public String getAvailable() {
