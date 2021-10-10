@@ -199,7 +199,7 @@ String[] myarray = new String[8];
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 637, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblCarModel)
                             .addComponent(lblCarManufacturer)
                             .addComponent(lblYearofManufacture)
@@ -207,9 +207,8 @@ String[] myarray = new String[8];
                             .addComponent(lblSerialNumber)
                             .addComponent(lblAvailableCity)
                             .addComponent(jLabel2)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jButtonUpload)
-                                .addComponent(lblSeatingCapacity)))
+                            .addComponent(lblSeatingCapacity, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonUpload, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTextYearofManufacture, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
@@ -224,7 +223,7 @@ String[] myarray = new String[8];
                         .addGap(127, 127, 127))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(225, 225, 225)
-                .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonSave, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -268,9 +267,9 @@ String[] myarray = new String[8];
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonUpload)
                     .addComponent(jTextFieldUploadLocation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addComponent(jButtonSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jButtonSave)
+                .addGap(27, 27, 27))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -301,24 +300,8 @@ String[] myarray = new String[8];
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         // TODO add your handling code here:
         StringBuilder Error = new StringBuilder();
-        Fleet newfleet = fd.addFleet();
-        if(!jTextFieldUploadLocation.getText().isEmpty()){
-         newfleet.setCarModel(myarray[0]); jTextCarModel.setText(myarray[0]);
-         newfleet.setCarManufacturer(myarray[1]); jTextCarManufacturer.setText(myarray[1]);
-         newfleet.setYearofManufacture(Integer.parseInt(myarray[2]));jTextYearofManufacture.setText(myarray[2]);
-        SimpleDateFormat formatter = new SimpleDateFormat("MM,dd,yyyy");  
-         Date date = null;
-            try {
-                date = formatter.parse(myarray[3]);
-            } catch (ParseException ex) {
-                Logger.getLogger(CreateJPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-         newfleet.setMaintainanceExpiry(date); jDateChooser2.setDate(date);
-         newfleet.setSerialNumber(myarray[4]); jTextSerialNumber.setText(myarray[4]);
-         newfleet.setAvailableCity(myarray[5]); jTextAvailableCity.setText(myarray[5]);
-         newfleet.setSeatingCapacity(Integer.parseInt(myarray[6])); jTextSeatingCapacity.setText(myarray[6]);
-         newfleet.setAvailable(myarray[7]); jCheckAvailable.setSelected(Boolean.parseBoolean(myarray[7]));
-        }
+        if(jTextFieldUploadLocation.getText().isEmpty()){
+                Fleet newfleet = fd.addFleet();
         if(!jTextCarModel.getText().isEmpty()){newfleet.setCarModel(jTextCarModel.getText());}
         else{ Error.append("Enter Model \n");}
         if(!jTextCarManufacturer.getText().isEmpty()){newfleet.setCarManufacturer(jTextCarManufacturer.getText());}
@@ -337,7 +320,9 @@ String[] myarray = new String[8];
         if(Error.isEmpty()){JOptionPane.showMessageDialog(this,"User information saved");}
         else{JOptionPane.showMessageDialog(this,Error);
         fd.removeFleet(newfleet);}
-        
+        }
+        if(Error.isEmpty()){JOptionPane.showMessageDialog(this,"User information saved");}
+        else{JOptionPane.showMessageDialog(this,Error);}
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jCheckAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckAvailableActionPerformed
@@ -417,15 +402,35 @@ String[] myarray = new String[8];
         Logger.getLogger(CreateJPanel.class.getName()).log(Level.SEVERE, null, ex);
     }
                         int i=0;
-			while (line != null) {
-				myarray[i]=line;
-                                i++;
+			while (line != null) {	 
+                            myarray[i]=line; 
             try {
                 // read next line
-                line = breader.readLine();
+                line = breader.readLine();   
             } catch (IOException ex) {
                 Logger.getLogger(CreateJPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
+        if(i==7){
+         Fleet newfleet = fd.addFleet();
+         newfleet.setCarModel(myarray[0]); jTextCarModel.setText(myarray[0]);
+         newfleet.setCarManufacturer(myarray[1]); jTextCarManufacturer.setText(myarray[1]);
+         newfleet.setYearofManufacture(Integer.parseInt(myarray[2]));jTextYearofManufacture.setText(myarray[2]);
+        SimpleDateFormat formatter = new SimpleDateFormat("MM,dd,yyyy");  
+         Date date = null;
+            try {
+                date = formatter.parse(myarray[3]);
+            } catch (ParseException ex) {
+                Logger.getLogger(CreateJPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+         newfleet.setMaintainanceExpiry(date); jDateChooser2.setDate(date);
+         newfleet.setSerialNumber(myarray[4]); jTextSerialNumber.setText(myarray[4]);
+         newfleet.setAvailableCity(myarray[5]); jTextAvailableCity.setText(myarray[5]);
+         newfleet.setSeatingCapacity(Integer.parseInt(myarray[6])); jTextSeatingCapacity.setText(myarray[6]);
+         newfleet.setAvailable(myarray[7]); jCheckAvailable.setSelected(Boolean.parseBoolean(myarray[7]));
+         newfleet.setUpdateTime();
+         i=-1;
+        }
+           i++;
 			}
         jTextFieldUploadLocation.setText(filename);
     }//GEN-LAST:event_jButtonUploadActionPerformed

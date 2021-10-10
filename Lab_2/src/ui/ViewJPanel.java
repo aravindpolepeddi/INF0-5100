@@ -96,6 +96,11 @@ public class ViewJPanel extends javax.swing.JPanel {
         jComboBoxFilter.setBackground(new java.awt.Color(0, 153, 51));
         jComboBoxFilter.setForeground(new java.awt.Color(255, 255, 255));
         jComboBoxFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Model", "Manufacturer", "Year of Manufacture", "Serial No.", "City", "Seats", "Availability", "Updated Time", " " }));
+        jComboBoxFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxFilterActionPerformed(evt);
+            }
+        });
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Last Updated Time:");
@@ -404,6 +409,10 @@ public class ViewJPanel extends javax.swing.JPanel {
         }
         }
     }//GEN-LAST:event_jButtonFirstAvailableActionPerformed
+
+    private void jComboBoxFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFilterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxFilterActionPerformed
 
         public void refreshTable(){
         int rowCount =jTable1.getRowCount();
