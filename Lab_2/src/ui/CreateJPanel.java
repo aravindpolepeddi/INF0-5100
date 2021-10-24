@@ -309,7 +309,13 @@ String[] myarray = new String[8];
         if(!jTextYearofManufacture.getText().isBlank()){newfleet.setYearofManufacture(Integer.parseInt(jTextYearofManufacture.getText()));}
         else{ Error.append("Enter Year of manufacture \n");}
         newfleet.setMaintainanceExpiry(jDateChooser2.getDate());
-        if(!jTextSerialNumber.getText().isBlank()){newfleet.setSerialNumber(jTextSerialNumber.getText());}
+        if(!jTextSerialNumber.getText().isBlank()){
+            for(Fleet f: fd.getFleetlist()){
+                if(f.getSerialNumber()!=null && f.getSerialNumber().equalsIgnoreCase(jTextSerialNumber.getText())){
+                Error.append("Serial Number already exists\n");
+                }
+            }
+            newfleet.setSerialNumber(jTextSerialNumber.getText());}
         else{ Error.append("Enter Serial Number \n");}
         if(!jTextAvailableCity.getText().isBlank()){newfleet.setAvailableCity(jTextAvailableCity.getText());}
         else{ Error.append("Enter City of availability \n");}
@@ -321,8 +327,10 @@ String[] myarray = new String[8];
         else{JOptionPane.showMessageDialog(this,Error);
         fd.removeFleet(newfleet);}
         }
+        else{
         if(Error.isEmpty()){JOptionPane.showMessageDialog(this,"User information saved");}
         else{JOptionPane.showMessageDialog(this,Error);}
+        }
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jCheckAvailableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckAvailableActionPerformed
