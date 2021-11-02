@@ -29,7 +29,9 @@ patientList.add(p);
 }
     
 public void removePatient(Patient f) {
-        patientList.remove(f);
+    f.vitalhist.removeVital();    
+    patientList.remove(f);
+        
 }
 
 public Patient getPatient(int ID) {

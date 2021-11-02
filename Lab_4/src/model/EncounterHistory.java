@@ -34,5 +34,9 @@ public void addVital(Encounter e) {
 vitalList.add(e);
 }
 
+public void removeVital(){
+this.vitalList.removeAll(vitalList);
+}
+
 
 }

@@ -649,16 +649,21 @@ public class MainCardJPanel extends javax.swing.JPanel {
         model.removeRow(rowdelete);
         int rowCount =jTable1.getRowCount();
         int i=0;
+        for(Patient p:patientdir.getPatientlist()){
+        if(i==rowdelete){
+        patientdir.removePatient(p);
+        break;
+        }
+        i++;
+        }
+        i=0;
         for(ProfileClass p: profdir.getProfilelist()){
             if(i==rowdelete){
                 //DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                 //String strDate = dateFormat.format(p.getLastUpdated());
                 //jLabelTime.setText(strDate);
                 profdir.removeProfile(p);
-                if(p.getIsPatient()==true);{
-            communitylist.remove(patient.getCommunity());
-            patientdir.removePatient(patient);
-            }
+                break;
             }
             i++;
         }
