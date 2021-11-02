@@ -79,6 +79,7 @@ public class MainCardJPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
+        jCheckBox1 = new javax.swing.JCheckBox();
         UpdateProfilejPanel1 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -211,6 +212,13 @@ public class MainCardJPanel extends javax.swing.JPanel {
         ));
         jScrollPane3.setViewportView(jTable3);
 
+        jCheckBox1.setText("IsPatient?");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -231,13 +239,14 @@ public class MainCardJPanel extends javax.swing.JPanel {
                         .addGap(60, 60, 60)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                             .addComponent(jComboBoxFilter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(37, 37, 37)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                             .addComponent(jTextSearchField))
-                        .addGap(59, 59, 59))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCheckBox1))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane3)))
@@ -260,7 +269,8 @@ public class MainCardJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBoxFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jCheckBox1))
                 .addGap(34, 34, 34)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(118, 118, 118))
@@ -933,12 +943,24 @@ public class MainCardJPanel extends javax.swing.JPanel {
         int rowCount =jTable1.getRowCount();
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         String SearchString=jTextSearchField.getText();
-        int ColumnIndex = jComboBoxFilter.getSelectedIndex();
         TableRowSorter<DefaultTableModel> filtermodel=new TableRowSorter<DefaultTableModel>(model);
         jTable1.setRowSorter(filtermodel);
         int columnindex=jComboBoxFilter.getSelectedIndex();
         filtermodel.setRowFilter(RowFilter.regexFilter(SearchString, columnindex));
     }//GEN-LAST:event_jTextSearchFieldKeyReleased
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+        String SearchString=String.valueOf(Boolean.FALSE);
+        if(jCheckBox1.isSelected()){
+        SearchString=String.valueOf(Boolean.TRUE);
+        }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> filtermodel=new TableRowSorter<DefaultTableModel>(model);
+        jTable1.setRowSorter(filtermodel);
+        filtermodel.setRowFilter(RowFilter.regexFilter(SearchString, 5));
+        
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 private void switchPanels(Component component) {
 jLayeredPane1.removeAll();
 jLayeredPane1.add(component);
@@ -1070,6 +1092,7 @@ jLayeredPane1.repaint();
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButtonAddVital;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBoxBloodOxygen;
     private javax.swing.JComboBox<String> jComboBoxFilter;
     private javax.swing.JLabel jLabel1;
