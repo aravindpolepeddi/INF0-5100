@@ -7,8 +7,10 @@ package business.Customer;
 
 import business.Business;
 import business.Organization.Organization;
+import business.Restaurant.Item;
 import business.Role.Role;
 import business.UserAccount.UserAccount;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 
 /**
@@ -36,6 +38,16 @@ public class Customer extends Role {
     private String username;
     private String password;
     private String Address;
+    private ArrayList<Item> customermenu = new ArrayList<>();
+    private Item item;
+
+    public ArrayList<Item> getMenu() {
+        return customermenu;
+    }
+
+    public void setMenu(ArrayList<Item> menu) {
+        this.customermenu = menu;
+    }
     private int id;
     private static int count = 1;
     
@@ -57,6 +69,12 @@ public class Customer extends Role {
 
     public void setAddress(String Address) {
         this.Address = Address;
+    }
+    
+    public void addtoCustomerMenu(String name,int price) {
+        this.item.setItemName(name);
+        this.item.setPrice(price);
+        customermenu.add(item);
     }
 
     @Override

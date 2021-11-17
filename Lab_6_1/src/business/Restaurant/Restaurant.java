@@ -76,4 +76,12 @@ public class Restaurant {
     public void removeItem(Item item){
         menu.remove(item);
     }
+
+    public ArrayList<Item> getMenu() {
+        return menu;
+    }
+
+    public void setMenu(ArrayList<Item> menu) {
+        this.menu = menu;
+    }
 }

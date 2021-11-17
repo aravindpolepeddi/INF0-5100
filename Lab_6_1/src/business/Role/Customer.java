@@ -8,6 +8,7 @@ import business.Business;
 import business.Organization.Organization;
 import business.UserAccount.UserAccount;
 import javax.swing.JPanel;
+import ui.customer.CustomerWorkAreaJPanel;
 
 /**
  *
@@ -28,7 +29,9 @@ public class Customer extends Role {
 
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Business system) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return new CustomerWorkAreaJPanel(userProcessContainer,account,organization,system);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
