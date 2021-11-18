@@ -6,7 +6,7 @@
 package ui.AdministrativeRole;
 
 import business.Business;
-import business.Role.Customer;
+import business.Role.CustomerRole;
 import business.Customer.CustomerDirectory;
 import business.Employee.Employee;
 import business.Organization.DeliveryOrganization;
@@ -156,7 +156,7 @@ public class ManageCustomerJPanel extends javax.swing.JPanel {
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         // TODO add your handling code here:
-       Customer c = new Customer();
+       CustomerRole c = new CustomerRole();
        system.getCustomerDirectory().createCustomer(jTextName.getText(),jTextUsername.getText(), jPasswordField1.getText());
        system.getUserAccountDirectory().createUserAccount(system,jTextName.getText(),jTextUsername.getText(), jPasswordField1.getText(), c);
      

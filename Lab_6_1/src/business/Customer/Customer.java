@@ -10,6 +10,7 @@ import business.Organization.Organization;
 import business.Restaurant.Item;
 import business.Role.Role;
 import business.UserAccount.UserAccount;
+import business.WorkQueue.WorkQueue;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
@@ -17,7 +18,7 @@ import javax.swing.JPanel;
  *
  * @author aravindpolepeddi
  */
-public class Customer extends Role {
+public class Customer {
     private String Name;
 
     public String getUsername() {
@@ -38,8 +39,17 @@ public class Customer extends Role {
     private String username;
     private String password;
     private String Address;
-    private ArrayList<Item> customermenu = new ArrayList<>();
-    private Item item;
+    private ArrayList<Item> customermenu;
+
+    public WorkQueue getWorkQueue() {
+        return workQueue;
+    }
+
+    public void setWorkQueue(WorkQueue workQueue) {
+        this.workQueue = workQueue;
+    }
+    private Item item = new Item();
+    private WorkQueue workQueue;
 
     public ArrayList<Item> getMenu() {
         return customermenu;
@@ -51,8 +61,9 @@ public class Customer extends Role {
     private int id;
     private static int count = 1;
     
-    Customer(){
-    this.type = Role.RoleType.Customer;
+    public Customer(){
+     workQueue = new WorkQueue();
+     customermenu = new ArrayList<>();
     }
 
     public String getName() {
@@ -71,14 +82,12 @@ public class Customer extends Role {
         this.Address = Address;
     }
     
-    public void addtoCustomerMenu(String name,int price) {
-        this.item.setItemName(name);
-        this.item.setPrice(price);
-        customermenu.add(item);
+    public void addtoCustomerMenu(Item item) {
+        this.customermenu.add(item);
     }
+    
+    public void removefromCustomerMenu(Item item) {
+        customermenu.remove(item);
+    }    
 
-    @Override
-    public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Business system) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

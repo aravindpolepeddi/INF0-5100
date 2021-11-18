@@ -20,7 +20,16 @@ public class CustomerDirectory {
 
     public ArrayList<Customer> getCustomerList() {
         return customerList;
-    }  
+    } 
+    
+    public Customer findCustomer(String Name){
+    for(Customer cus:customerList){
+    if(cus.getName().equals(Name)){
+    return cus;
+    }
+    }
+    return null;
+    }
     
         public Customer createCustomer(String name,String username, String password){
         Customer customer = new Customer();
@@ -28,7 +37,6 @@ public class CustomerDirectory {
         customer.setUsername(username);
         customer.setPassword(password);
         customerList.add(customer);
-        //userAccountList.add(userAccount);
         return customer;
     }
 }

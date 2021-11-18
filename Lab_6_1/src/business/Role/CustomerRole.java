@@ -8,28 +8,30 @@ import business.Business;
 import business.Organization.Organization;
 import business.UserAccount.UserAccount;
 import javax.swing.JPanel;
+import ui.customer.CustomerWorkAreaJPanel;
 
 /**
  *
  * @author raunak
  */
-public class Deliveryman extends Role {
+public class CustomerRole extends Role {
 
-    public Deliveryman() {
-        this.type = RoleType.DeliveryMan;
+    public CustomerRole() {
+        this.type = RoleType.Customer;
     }
-
-/*    
+/*
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Business business) {
-        this.type = RoleType.DeliveryMan;
-        return new DeliveryManWorkAreaJPanel(userProcessContainer, account, organization, business);
+        this.type = RoleType.Customer;
+        return new CustomerWorkAreaJPanel(userProcessContainer, account, organization, business);
     }
 */
 
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Business system) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return new CustomerWorkAreaJPanel(userProcessContainer,account,organization,system);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

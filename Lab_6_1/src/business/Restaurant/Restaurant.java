@@ -84,4 +84,14 @@ public class Restaurant {
     public void setMenu(ArrayList<Item> menu) {
         this.menu = menu;
     }
+    
+    public Item findItem(String name, int price){
+    for(Item i: menu){
+    if(i.getItemName()==name && i.getPrice()==price){
+    return i;
+    }
+    }
+    return null;
+    }
+    
 }

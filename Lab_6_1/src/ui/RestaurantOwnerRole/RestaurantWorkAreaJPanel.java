@@ -6,10 +6,15 @@
 package ui.RestaurantOwnerRole;
 
 import business.Business;
+import business.DeliveryMan.DeliveryMan;
+import business.Order.Order;
 import business.Organization.Organization;
+import business.Restaurant.Restaurant;
 import business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 import ui.AdministrativeRole.ManageCustomerJPanel;
 
 /**
@@ -25,12 +30,21 @@ public class RestaurantWorkAreaJPanel extends javax.swing.JPanel {
     Business system;   
     UserAccount account;
     Organization organization;
+    Order order;
     public RestaurantWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, Organization organization, Business system) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.system = system;
         this.account=account;
         this.organization=organization;
+        String[] array = new String[system.getDeliveryManDirectory().getDeliveryManList().size()];
+        int i=0;
+        for(DeliveryMan deliveryman:system.getDeliveryManDirectory().getDeliveryManList()){
+        array[i] = deliveryman.getName();
+        i++;
+        }
+        jComboBox1.setModel(new DefaultComboBoxModel<String>(array));
+        refreshTable();
     }
 
     /**
@@ -60,23 +74,38 @@ public class RestaurantWorkAreaJPanel extends javax.swing.JPanel {
         });
 
         jButton2.setText("Accept Order");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("RejectOrder");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Customer", "Restaurant", "OrderedTime", "Status", "DeliveredTime", "DeliveredBy"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
         jButton4.setText("Assign DeliveryMan");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -137,7 +166,23 @@ public class RestaurantWorkAreaJPanel extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
+public void refreshTable(){
+        int rowCount =jTable1.getRowCount();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        for(int i=rowCount - 1;i>=0;i--){
+            model.removeRow(i);
+        }
+        for(Order order: system.getOrderdirectory().getOrderdir()){
+            Object row[] = new Object[6];
+            row[0] = order.getCustomerName();
+            row[1] = order.getRestaurantName();
+            row[2] = order.getOrderTime();
+            row[3] = order.getStatus();
+            row[4] = order.getDeliveryTime();
+            row[5] = order.getDeliveryManName();
+            model.addRow(row);
+        }
+}
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         RestaurantMenuJPanel mcjp = new RestaurantMenuJPanel(userProcessContainer,account,organization, system);
@@ -145,6 +190,36 @@ public class RestaurantWorkAreaJPanel extends javax.swing.JPanel {
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.next(userProcessContainer);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        int index =jTable1.getSelectedRow();
+        order = system.getOrderdirectory().getOrderdir().get(index);
+        order.setStatus("Preparing");
+        system.getOrderdirectory().getOrderdir().set(index, order);
+        refreshTable();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        int index =jTable1.getSelectedRow();
+        order = system.getOrderdirectory().getOrderdir().get(index);
+        order.setStatus("Rejected");
+        system.getOrderdirectory().getOrderdir().set(index, order);
+        refreshTable();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        int j=jTable1.getSelectedRow();//??
+        int index =jComboBox1.getSelectedIndex();
+        DeliveryMan deliveryman=system.getDeliveryManDirectory().getDeliveryManList().get(index); //??????
+        order = system.getOrderdirectory().getOrderdir().get(j);
+        order.setStatus("On the way");
+        order.setDeliveryManName(deliveryman.getName());
+        system.getOrderdirectory().getOrderdir().set(j, order);//??
+        refreshTable();
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

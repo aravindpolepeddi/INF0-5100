@@ -6,10 +6,13 @@
 package business.DeliveryMan;
 
 import business.Business;
+import business.Order.Order;
 import business.Organization.Organization;
 import business.Role.Role;
 import business.UserAccount.UserAccount;
+import java.util.ArrayList;
 import javax.swing.JPanel;
+import ui.DeliveryMan.DeliveryWorkAreaJpanel;
 
 /**
  *
@@ -57,10 +60,13 @@ public class DeliveryMan extends Role{
         this.Address = Address;
     }
     
+    
     private String Address;
 
     @Override
     public JPanel createWorkArea(JPanel userProcessContainer, UserAccount account, Organization organization, Business system) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new DeliveryWorkAreaJpanel(userProcessContainer,account,organization,system);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 }
