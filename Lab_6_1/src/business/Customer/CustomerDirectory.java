@@ -31,6 +31,10 @@ public class CustomerDirectory {
     return null;
     }
     
+    public void deleteCustomer(Customer customer){
+    customerList.remove(customer);
+    }
+    
         public Customer createCustomer(String name,String username, String password){
         Customer customer = new Customer();
         customer.setName(name);

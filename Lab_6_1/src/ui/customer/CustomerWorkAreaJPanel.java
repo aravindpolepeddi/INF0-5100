@@ -260,8 +260,19 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
         Random randomNum = new Random();
         int randomOrderId = randomNum.nextInt(65536 - 32768);
         order.setIndex(randomOrderId);
+        order.setFeedback("");
         system.getOrderdirectory().addOrder(order);
-
+        JOptionPane.showMessageDialog(this, "Order Placed");
+        int rowCount =jTable2.getRowCount();
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        for(int i=rowCount - 1;i>=0;i--){
+            model.removeRow(i);
+        int rowCount2 =jTable2.getRowCount();
+        DefaultTableModel model2 = (DefaultTableModel) jTable2.getModel();
+        for(int j=rowCount2 - 1;j>=0;j--){
+            model2.removeRow(j);
+        }
+        }
         }
         
     }//GEN-LAST:event_jButton2ActionPerformed

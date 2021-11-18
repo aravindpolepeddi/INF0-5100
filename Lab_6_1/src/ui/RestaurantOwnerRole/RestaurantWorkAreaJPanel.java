@@ -13,6 +13,7 @@ import business.Restaurant.Restaurant;
 import business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import ui.AdministrativeRole.ManageCustomerJPanel;
@@ -89,13 +90,13 @@ public class RestaurantWorkAreaJPanel extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Customer", "Restaurant", "OrderedTime", "Status", "DeliveredTime", "DeliveredBy"
+                "ID", "Customer", "Restaurant", "OrderedTime", "Status", "DeliveredTime", "DeliveredBy", "FeedBack"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -129,18 +130,12 @@ public class RestaurantWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 571, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1)
-                .addGap(266, 266, 266))
+                .addGap(252, 252, 252))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(137, 137, 137)
                 .addComponent(jButton2)
@@ -152,7 +147,12 @@ public class RestaurantWorkAreaJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(86, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -173,14 +173,19 @@ public void refreshTable(){
             model.removeRow(i);
         }
         for(Order order: system.getOrderdirectory().getOrderdir()){
-            Object row[] = new Object[6];
-            row[0] = order.getCustomerName();
-            row[1] = order.getRestaurantName();
-            row[2] = order.getOrderTime();
-            row[3] = order.getStatus();
-            row[4] = order.getDeliveryTime();
-            row[5] = order.getDeliveryManName();
+            if(account.getName().equals(order.getRestaurantName())){
+            Object row[] = new Object[8];
+            row[0] = order;
+            row[1] = order.getCustomerName();
+            row[2] = order.getRestaurantName();
+            row[3] = order.getOrderTime();
+            row[4] = order.getStatus();
+            row[5] = order.getDeliveryTime();
+            row[6] = order.getDeliveryManName();
+            row[7] = order.getFeedback();
             model.addRow(row);
+            }
+
         }
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -194,31 +199,80 @@ public void refreshTable(){
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         int index =jTable1.getSelectedRow();
-        order = system.getOrderdirectory().getOrderdir().get(index);
-        order.setStatus("Preparing");
-        system.getOrderdirectory().getOrderdir().set(index, order);
+        if (index < 0) {
+        JOptionPane.showMessageDialog(this, "Please select an Order");
+        return;
+        }
+        else{
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Order selectedOrder = (Order) model.getValueAt(index, 0);
+        Order updatedorder= system.getOrderdirectory().findOrder(selectedOrder.getIndex());
+        //order = system.getOrderdirectory().getOrderdir().get(index);
+        updatedorder.setStatus("Preparing");
+        int j=0;
+        for(Order order:system.getOrderdirectory().getOrderdir()){
+        if(order.getIndex()==updatedorder.getIndex()){
+        system.getOrderdirectory().getOrderdir().set(j, updatedorder);
+        }
+        j++;
+        //system.getOrderdirectory().getOrderdir().set(index, order);
+        }
         refreshTable();
+      }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         int index =jTable1.getSelectedRow();
-        order = system.getOrderdirectory().getOrderdir().get(index);
-        order.setStatus("Rejected");
-        system.getOrderdirectory().getOrderdir().set(index, order);
+        if (index < 0) {
+        JOptionPane.showMessageDialog(this, "Please select an Order");
+        return;
+        }
+        else{
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Order selectedOrder = (Order) model.getValueAt(index, 0);
+        Order updatedorder= system.getOrderdirectory().findOrder(selectedOrder.getIndex());
+        //order = system.getOrderdirectory().getOrderdir().get(index);
+        updatedorder.setStatus("Rejected");
+        int j=0;
+        for(Order order:system.getOrderdirectory().getOrderdir()){
+        if(order.getIndex()==updatedorder.getIndex()){
+        system.getOrderdirectory().getOrderdir().set(j, updatedorder);
+        }
+        j++;
+        //system.getOrderdirectory().getOrderdir().set(index, order);
+        }
         refreshTable();
+      }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        int j=jTable1.getSelectedRow();//??
-        int index =jComboBox1.getSelectedIndex();
-        DeliveryMan deliveryman=system.getDeliveryManDirectory().getDeliveryManList().get(index); //??????
-        order = system.getOrderdirectory().getOrderdir().get(j);
-        order.setStatus("On the way");
-        order.setDeliveryManName(deliveryman.getName());
-        system.getOrderdirectory().getOrderdir().set(j, order);//??
+
+        int deliveryindex =jComboBox1.getSelectedIndex();
+        DeliveryMan deliveryman=system.getDeliveryManDirectory().getDeliveryManList().get(deliveryindex);        
+        int index =jTable1.getSelectedRow();
+        if (index < 0) {
+        JOptionPane.showMessageDialog(this, "Please select an Order");
+        return;
+        }
+        else{
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Order selectedOrder = (Order) model.getValueAt(index, 0);
+        Order updatedorder= system.getOrderdirectory().findOrder(selectedOrder.getIndex());
+        //order = system.getOrderdirectory().getOrderdir().get(index);
+        updatedorder.setStatus("On the way");
+        updatedorder.setDeliveryManName(deliveryman.getName());
+        int j=0;
+        for(Order order:system.getOrderdirectory().getOrderdir()){
+        if(order.getIndex()==updatedorder.getIndex()){
+        system.getOrderdirectory().getOrderdir().set(j, updatedorder);
+        }
+        j++;
+        //system.getOrderdirectory().getOrderdir().set(index, order);
+        }
         refreshTable();
+      }
     }//GEN-LAST:event_jButton4ActionPerformed
 
 

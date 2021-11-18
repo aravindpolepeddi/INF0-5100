@@ -5,6 +5,7 @@
  */
 package business.DeliveryMan;
 
+import business.Customer.Customer;
 import business.UserAccount.UserAccount;
 import java.util.ArrayList;
 
@@ -31,4 +32,18 @@ public class DeliveryManDirectory {
         deliveryManList.add(deliveryMan);
         return deliveryMan;
     }
+    
+    public DeliveryMan findDeliveryMan(String Name){
+    for(DeliveryMan cus:deliveryManList){
+    if(cus.getName().equals(Name)){
+    return cus;
+    }
+    }
+    return null;
+    }
+    
+    public void deleteDeliveryMan(DeliveryMan customer){
+    deliveryManList.remove(customer);
+    }
+    
 }

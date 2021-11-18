@@ -5,6 +5,8 @@
  */
 package business.Order;
 
+import business.Restaurant.Item;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -19,6 +21,16 @@ public class Order {
     private String DeliveryTime;
     private String Status;
     private int index=0;
+    private ArrayList<Item> orderItems;
+    private String Feedback;
+
+    public String getFeedback() {
+        return Feedback;
+    }
+
+    public void setFeedback(String Feedback) {
+        this.Feedback = Feedback;
+    }
 
     public int getIndex() {
         return index;
@@ -34,6 +46,14 @@ public class Order {
 
     public void setCustomerName(String CustomerName) {
         this.CustomerName = CustomerName;
+    }
+
+    public ArrayList<Item> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(ArrayList<Item> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public String getRestaurantName() {
@@ -74,6 +94,10 @@ public class Order {
 
     public void setStatus(String Status) {
         this.Status = Status;
+    }
+    
+    public void setOrderItems(Item item) {
+        orderItems.add(item);
     }
     
     @Override

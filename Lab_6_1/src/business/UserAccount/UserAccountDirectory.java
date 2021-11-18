@@ -33,6 +33,19 @@ public class UserAccountDirectory {
         return null;
     }
     
+    public UserAccount findUserAccount(String Name){
+    for(UserAccount res:userAccountList){
+    if(res.getName().equals(Name)){
+    return res;
+    }
+    }
+    return null;
+    }
+    
+    public void deleteUserAccount(UserAccount customer){
+    userAccountList.remove(customer);
+    }
+    
     public UserAccount createUserAccount(Business system,String Name,String username, String password, Role role){
         UserAccount userAccount = new UserAccount();
         userAccount.setName(Name);

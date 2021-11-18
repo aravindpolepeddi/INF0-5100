@@ -25,6 +25,7 @@ public class ConfigureABusiness {
 
         
         UserAccount account = new UserAccount();
+        account.setName("admin");
         account.setUsername("admin");
         account.setPassword("admin");
         account.setRole(new AdminRole());

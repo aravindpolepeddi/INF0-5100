@@ -67,13 +67,13 @@ public class DeliveryWorkAreaJpanel extends javax.swing.JPanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Customer", "Restaurant", "OrderedTime", "Status", "DeliveredTime"
+                "ID", "Customer", "Restaurant", "OrderedTime", "Status", "DeliveredTime", "FeedBack"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -160,13 +160,14 @@ public void refreshTable(){
         }
         for(Order order: system.getOrderdirectory().getOrderdir()){
             if(useraccount.getName().equals(order.getDeliveryManName())){
-            Object row[] = new Object[6];
+            Object row[] = new Object[7];
             row[0] = order;
             row[1] = order.getCustomerName();
             row[2] = order.getRestaurantName();
             row[3] = order.getOrderTime();
             row[4] = order.getStatus();
             row[5] = order.getDeliveryTime();
+            row[6] = order.getFeedback();
             model.addRow(row);
             
             }

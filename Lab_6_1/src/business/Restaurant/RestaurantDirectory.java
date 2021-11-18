@@ -32,6 +32,10 @@ public class RestaurantDirectory {
     return null;
     }
     
+    public void deleteRestaurant(Restaurant customer){
+    restaurantList.remove(customer);
+    }
+    
     public Restaurant createRestaurantAccount(String RestaurantOwnerName,String RestaurantName,String Username, String password, Role role){
         Restaurant restaurant = new Restaurant();
         restaurant.setOwnerName(RestaurantOwnerName);
