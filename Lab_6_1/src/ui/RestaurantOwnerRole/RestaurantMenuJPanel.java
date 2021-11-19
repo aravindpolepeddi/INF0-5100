@@ -161,14 +161,13 @@ public class RestaurantMenuJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         Restaurant restaurant=system.getRestaurantDirectory().findRestaurant(useraccount.getName());
         if(!update){
-    
-        if(restaurant!=null){
         Item item=new Item();
+        if(restaurant!=null){
         item.setItemName(jTextItemName.getText());
         item.setPrice(Integer.parseInt(jTextPrice.getText()));
+        }
         if(restaurant.findItem(jTextItemName.getText(), item.getPrice())==null)
         restaurant.addItem(item);
-        }
         else{
         JOptionPane.showMessageDialog(this, "Item Already Exists");
         }
@@ -254,7 +253,8 @@ public class RestaurantMenuJPanel extends javax.swing.JPanel {
         jTextItemName.setText(i.getItemName());
         jTextPrice.setText(String.valueOf(i.getPrice()));
         updateditem=i;
-        restaurant.removeItem(i);        
+        restaurant.removeItem(i);
+        break;        
         }
         j++;
         }

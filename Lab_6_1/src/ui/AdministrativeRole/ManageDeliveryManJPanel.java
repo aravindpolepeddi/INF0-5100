@@ -35,6 +35,9 @@ public class ManageDeliveryManJPanel extends javax.swing.JPanel {
     private DeliveryManDirectory delmandir;
     private OrganizationDirectory directory;
     private JPanel userProcessContainer;
+    private Boolean update=false;
+    private DeliveryMan updatedelman = new DeliveryMan();
+    private UserAccount updatedua = new UserAccount();
     
     public ManageDeliveryManJPanel(JPanel userProcessContainer,Business system,DeliveryManDirectory delmandir) {
         initComponents();
@@ -78,6 +81,7 @@ public class ManageDeliveryManJPanel extends javax.swing.JPanel {
         jButtonSave = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         jTableDeliveryMan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -119,6 +123,13 @@ public class ManageDeliveryManJPanel extends javax.swing.JPanel {
             }
         });
 
+        jButton3.setText("Update");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -126,7 +137,7 @@ public class ManageDeliveryManJPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -143,7 +154,9 @@ public class ManageDeliveryManJPanel extends javax.swing.JPanel {
                         .addGap(118, 118, 118))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton1)
                         .addContainerGap())))
         );
@@ -154,7 +167,9 @@ public class ManageDeliveryManJPanel extends javax.swing.JPanel {
                     .addComponent(jButton1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jButton2)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2)
+                            .addComponent(jButton3))))
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,19 +204,39 @@ public class ManageDeliveryManJPanel extends javax.swing.JPanel {
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         // TODO add your handling code here:
-       
-       
+       if(!update){
        system.getDeliveryManDirectory().createDeliveryMan(jTextName.getText(),jTextUsername.getText(),jPasswordField1.getText());
        DeliveryMan dm= new DeliveryMan();
        system.getUserAccountDirectory().createUserAccount(system,jTextName.getText(),jTextUsername.getText(), jPasswordField1.getText(), dm);
+       }
+       else{
+       updatedelman.setName(jTextName.getText());
+       updatedelman.setUsername(jTextUsername.getText());
+       updatedelman.setPassword(jPasswordField1.getText());
+       
+        updatedua.setName(updatedelman.getName());
+        updatedua.setUsername(updatedelman.getUsername());
+        updatedua.setPassword(updatedelman.getPassword());
+        
+        system.getDeliveryManDirectory().getDeliveryManList().add(updatedelman);
+        system.getUserAccountDirectory().getUserAccountList().add(updatedua);
+    }
+       
+
        populateTable();
     }//GEN-LAST:event_jButtonSaveActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        if(!update){
         userProcessContainer.remove(this);
         CardLayout layout = (CardLayout) userProcessContainer.getLayout();
         layout.previous(userProcessContainer);
+        }
+        else{
+        JOptionPane.showMessageDialog(this, "Please Save your updated deliveryman");
+        }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -216,30 +251,66 @@ public class ManageDeliveryManJPanel extends javax.swing.JPanel {
         for(DeliveryMan deliveryman: system.getDeliveryManDirectory().getDeliveryManList()){
         if(j==index){
         DeliveryMan updatedDeliveryMan=system.getDeliveryManDirectory().findDeliveryMan(deliveryman.getName());
+        for(UserAccount ua:system.getUserAccountDirectory().getUserAccountList()){
+        if(ua.getName().equals(deliveryman.getName())){
+        system.getUserAccountDirectory().getUserAccountList().remove(ua);
+        //system.getDeliveryManDirectory().deleteDeliveryMan(updatedDeliveryMan);
+        break;
+        }
+        }
         system.getDeliveryManDirectory().deleteDeliveryMan(updatedDeliveryMan);
         break;
         }
         j++;
         }
-        
-        int i=0;
-        for(UserAccount ua: system.getUserAccountDirectory().getUserAccountList()){
-        if(i==index+1){
-        UserAccount updatedua = system.getUserAccountDirectory().findUserAccount(ua.getName());
-        system.getUserAccountDirectory().deleteUserAccount(updatedua);
-        break;
-        }
-        i++;
-        }
-        
+         
         }
         populateTable();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        int index=jTableDeliveryMan.getSelectedRow();
+        int i=0;
+        if(index<0){
+        JOptionPane.showMessageDialog(this, "Please select an Customer");
+        update=false;
+        return;
+        }
+        for(DeliveryMan deliveryman:system.getDeliveryManDirectory().getDeliveryManList()){
+        if(i==index){
+        updatedelman.setAddress(deliveryman.getAddress());
+        updatedelman.setName(deliveryman.getName());
+        updatedelman.setUsername(deliveryman.getUsername());
+        updatedelman.setPassword(deliveryman.getPassword());
+        
+        for(UserAccount ua:system.getUserAccountDirectory().getUserAccountList()){
+        if(deliveryman.getName().equals(ua.getName())){
+        updatedua.setName(ua.getName());
+        updatedua.setUsername(ua.getUsername());
+        updatedua.setPassword(ua.getPassword());
+        updatedua.setRole(ua.getRole());
+        updatedua.setEmployee(ua.getEmployee());
+        
+        jTextName.setText(ua.getName());
+        jTextUsername.setText(ua.getUsername());
+        jPasswordField1.setText(ua.getPassword());
+        
+        system.getUserAccountDirectory().getUserAccountList().remove(ua);         
+        system.getDeliveryManDirectory().getDeliveryManList().remove(deliveryman);
+        break; 
+        }
+        }
+        break;
+        }
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonSave;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

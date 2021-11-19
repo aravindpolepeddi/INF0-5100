@@ -25,7 +25,7 @@ public class Restaurant {
     private static int count = 1;
     private WorkQueue workQueue;
     
-    Restaurant(){
+    public Restaurant(){
     workQueue = new WorkQueue();
     }
     

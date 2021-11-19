@@ -219,6 +219,10 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         int index=jComboBox1.getSelectedIndex();
+        if(index<0){
+        JOptionPane.showMessageDialog(this, "Please select an Restaurant");
+        return;
+        }
         Restaurant res=system.getRestaurantDirectory().getRestaurantList().get(index);
         
         refreshMenu(res);
@@ -229,6 +233,14 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         int selectedRow = jTable1.getSelectedRow();
         int index=jComboBox1.getSelectedIndex();
+        if(selectedRow<0){
+        JOptionPane.showMessageDialog(this, "Please select an Item");
+        return;
+        }
+        if(index<0){
+        JOptionPane.showMessageDialog(this, "Please select an Restaurant");
+        return;
+        }
         Restaurant res=system.getRestaurantDirectory().getRestaurantList().get(index);
         int j=0;
            for(Item i:res.getMenu()){

@@ -127,23 +127,7 @@ public class LoginScreen extends javax.swing.JPanel {
         boolean flag = false;
         
         UserAccount userAccount = null;
-/*
         
-        for (Organization organization : system.getOrganizationDirectory().getOrganizationList()){
-            userAccount = organization.getUserAccountDirectory().authenticateUser(userName, password);
-            if (userAccount != null){
-                
-                JPanel mainScreen = new MainScreen(mainWorkArea, userAccount, organization, system); //customer,restaurant directoty as parameter ??
-                mainWorkArea.add("MainScreen", mainScreen);
-                CardLayout layout = (CardLayout) mainWorkArea.getLayout();
-                layout.next(mainWorkArea);
-                
-                flag = true;
-                break;
-            }
-        }*/
-        
-        for (UserAccount userAccount1: system.getUserAccountDirectory().getUserAccountList()){
             userAccount = system.getUserAccountDirectory().authenticateUser(userName, password);
             if (userAccount != null){
                 
@@ -153,9 +137,9 @@ public class LoginScreen extends javax.swing.JPanel {
                 layout.next(mainWorkArea);
                 
                 flag = true;
-                break;
+                
             }
-        }
+        
 
         if (flag == false) {
             JOptionPane.showMessageDialog(null, "Invalid User Name/ Password.");
