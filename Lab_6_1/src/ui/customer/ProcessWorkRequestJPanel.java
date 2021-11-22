@@ -56,8 +56,9 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 204, 51));
 
+        btnBack.setBackground(new java.awt.Color(255, 51, 51));
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,6 +82,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jButton1.setBackground(new java.awt.Color(255, 51, 51));
         jButton1.setText("Send Feedback");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +102,7 @@ public class ProcessWorkRequestJPanel extends javax.swing.JPanel {
                         .addGap(33, 33, 33)
                         .addComponent(lblTitle))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(132, 132, 132)
+                        .addGap(121, 121, 121)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton1)

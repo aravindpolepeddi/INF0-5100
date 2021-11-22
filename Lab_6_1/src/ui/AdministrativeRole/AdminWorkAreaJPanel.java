@@ -38,8 +38,9 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
         manageRestaurantJButton = new javax.swing.JButton();
         lblTitle = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 204, 51));
 
+        customerJButton.setBackground(new java.awt.Color(255, 51, 51));
         customerJButton.setText("Manage Customer");
         customerJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -47,6 +48,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        manageEmployeeJButton.setBackground(new java.awt.Color(255, 51, 51));
         manageEmployeeJButton.setText("Manage Delivery");
         manageEmployeeJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -54,6 +56,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        manageRestaurantJButton.setBackground(new java.awt.Color(255, 51, 51));
         manageRestaurantJButton.setText("Manage Restaurant");
         manageRestaurantJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,7 +78,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
                     .addComponent(manageRestaurantJButton)
                     .addComponent(customerJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTitle))
-                .addContainerGap())
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {customerJButton, manageEmployeeJButton, manageRestaurantJButton});
@@ -91,7 +94,7 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(manageEmployeeJButton)
                 .addGap(18, 18, 18)
                 .addComponent(customerJButton)
-                .addContainerGap())
+                .addContainerGap(45, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

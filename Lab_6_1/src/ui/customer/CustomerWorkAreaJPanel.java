@@ -87,6 +87,9 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 204, 51));
+
+        jButton1.setBackground(new java.awt.Color(255, 51, 51));
         jButton1.setText("Fetch Menu");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,6 +141,7 @@ public class CustomerWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(255, 51, 51));
         jButton3.setText("Select Item");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

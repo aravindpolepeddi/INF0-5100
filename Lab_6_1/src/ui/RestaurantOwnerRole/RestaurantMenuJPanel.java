@@ -58,10 +58,13 @@ public class RestaurantMenuJPanel extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 204, 51));
+
         jLabel1.setText("Item Name");
 
         jLabel2.setText("Price");
 
+        jButton1.setBackground(new java.awt.Color(255, 51, 51));
         jButton1.setText("Submit");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,6 +92,7 @@ public class RestaurantMenuJPanel extends javax.swing.JPanel {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(255, 51, 51));
         jButton3.setText("Back");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,6 +100,7 @@ public class RestaurantMenuJPanel extends javax.swing.JPanel {
             }
         });
 
+        jButton4.setBackground(new java.awt.Color(255, 51, 0));
         jButton4.setText("Update");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

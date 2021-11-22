@@ -67,6 +67,9 @@ public class RestaurantWorkAreaJPanel extends javax.swing.JPanel {
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
 
+        jPanel1.setBackground(new java.awt.Color(255, 204, 51));
+
+        jButton1.setBackground(new java.awt.Color(255, 51, 51));
         jButton1.setText("Create/Edit Menu");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,6 +77,7 @@ public class RestaurantWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        jButton2.setBackground(new java.awt.Color(255, 51, 51));
         jButton2.setText("Accept Order");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,6 +85,7 @@ public class RestaurantWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        jButton3.setBackground(new java.awt.Color(255, 51, 51));
         jButton3.setText("RejectOrder");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,6 +106,7 @@ public class RestaurantWorkAreaJPanel extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        jButton4.setBackground(new java.awt.Color(255, 51, 51));
         jButton4.setText("Assign DeliveryMan");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
